@@ -6,28 +6,32 @@ Example:
 
 Input: [0,1,0,3,12]
 Output: [1,3,12,0,0]
-'''
+Note:
 
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+'''
 '''
 My way:
-
-Using pointer. When the pointer find 0, pop this value, if not 0, pointer+=1. Remenber the k times of pop
-Then append k times zero
+Double pointer, p1 to 0, p2 to non-0.
+First, p1 should be 0
+when p2 find non zero, change the value of p1 and p2.
+then p1+=1
+if p2<p1:
+p2=p1
 
 The code are below
 '''
 nums=[0,1,0,3,12]
-p=0
-k=0
-nums.append(None)
-while nums[p]!=None:
-    if nums[p]==0:
-        nums.pop(p)
-        k+=1
+p1=0
+p2=0
+while p1<len(nums) and p2<len(nums):
+    if nums[p1]!=0:
+        p1+=1
     else:
-         p+=1
-nums.pop()
-for i in range(k):
-    nums.append(0)
-
-print(nums)
+        if p2<p1:
+           p2=p1
+           if nums[p2]!=0:
+              nums[p1]=nums[p2]
+              nums[p2]=0
+           p2+=1
